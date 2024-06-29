@@ -22,7 +22,7 @@
 
     // カメラを作成
     var camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-    camera.position.set(10, 15, 15);
+    camera.position.set(15, 20, 20);
     camera.lookAt(0, 5, 0);
 
     // 平行光源
@@ -77,6 +77,22 @@
     tower4.position.set(5, 4, 5);
     castleGroup.add(tower4);
 
+    // 中央の塔（天守閣）を作成
+    var mainTowerGeometry = new THREE.BoxGeometry(6, 12, 6);
+    var mainTowerMaterial = new THREE.MeshPhongMaterial({ color: 0x8B0000 });
+    var mainTower = new THREE.Mesh(mainTowerGeometry, mainTowerMaterial);
+    mainTower.position.set(0, 8, 0);
+    castleGroup.add(mainTower);
+
+    // 屋根を作成
+    var roofGeometry = new THREE.ConeGeometry(3, 4, 4);
+    var roofMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+    
+    var roof1 = new THREE.Mesh(roofGeometry, roofMaterial);
+    roof1.position.set(0, 14, 0);
+    roof1.rotation.y = Math.PI / 4;
+    castleGroup.add(roof1);
+
     // 城門を作成
     var gateGeometry = new THREE.BoxGeometry(2, 3, 1);
     var gateMaterial = new THREE.MeshPhongMaterial({ color: 0x654321 });
@@ -95,6 +111,31 @@
     var window2 = window1.clone();
     window2.position.set(3, 3, -5.05);
     castleGroup.add(window2);
+
+    var window3 = window1.clone();
+    window3.position.set(-3, 3, 5.05);
+    castleGroup.add(window3);
+
+    var window4 = window1.clone();
+    window4.position.set(3, 3, 5.05);
+    castleGroup.add(window4);
+
+    var window5 = window1.clone();
+    window5.position.set(-5.05, 3, -3);
+    window5.rotation.y = Math.PI / 2;
+    castleGroup.add(window5);
+
+    var window6 = window5.clone();
+    window6.position.set(-5.05, 3, 3);
+    castleGroup.add(window6);
+
+    var window7 = window5.clone();
+    window7.position.set(5.05, 3, -3);
+    castleGroup.add(window7);
+
+    var window8 = window5.clone();
+    window8.position.set(5.05, 3, 3);
+    castleGroup.add(window8);
 
     // 城のグループをシーンに追加
     scene.add(castleGroup);
