@@ -27,13 +27,13 @@
       scene.background = new THREE.Color(0xaaaaaa); // 背景色を設定
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height);
+      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
        // カメラの初期座標を設定
       camera.position.set(0, 0, 1000);
 
       // カメラコントローラーを作成
-        const controls = new THREE.OrbitControls(camera);
-        controls.autoRotate = true;
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 0, 0); // カメラのターゲットを原点に設定
       
       // グリッドと軸ヘルパーを追加（視覚的にシーンを確認するため）
       const gridHelper = new THREE.GridHelper(1000, 20);
@@ -58,16 +58,17 @@
       scene.add(ambientLight);
 
       const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
-      directionalLight.position.set(500, 500, 500);
+      directionalLight1.position.set(500, 500, 500);
       scene.add(directionalLight1);
-
-      tick();
       
       // レンダリングループ
-      function animate() {group.rotateY(0.01);
-          renderer.render(scene, camera);
-          requestAnimationFrame(tick);
+      function animate() {
+        controls.update();
+        renderer.render(scene,camera);
+        requestAnimationFrame(animate);
       }
+
+      animete();
     }
   </script>
 </body>
