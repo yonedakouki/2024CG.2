@@ -61,12 +61,12 @@
       directionalLight.position.set(500, 500, 500);
       scene.add(directionalLight1);
 
-      animate();
+      tick();
       
       // レンダリングループ
       function animate() {group.rotateY(0.01);
           renderer.render(scene, camera);
-          requestAnimationFrame(animate);
+          requestAnimationFrame(tick);
       }
     }
   </script>
