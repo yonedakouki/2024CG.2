@@ -49,7 +49,10 @@ function init() {
  const spheres = []; 
  for (let i = 0; i < 10; i++) {
   const geometry = new THREE.SphereGeometry(50, 50, 50);
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xff0000,
+    flatShading: true // フラットシェーディングを有効にする
+  });
   const sphere = new THREE.Mesh(geometry, material);
   sphere.position.x = Math.random() * 400 - 200;
   sphere.position.y = Math.random() * 400 - 200;
