@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/controls/OrbitControls.js"></script>
+  <script src="OrbitControls.js"></script>
 </head>
 <body>
   <canvas id="myCanvas"></canvas>
@@ -27,18 +27,14 @@
       scene.background = new THREE.Color(0xaaaaaa); // 背景色を設定
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-      camera.position.set(0, 200, 1000);
-      camera.lookAt(scene.position);
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+       // カメラの初期座標を設定
+      camera.position.set(0, 0, 1000);
 
-      // OrbitControls を設定
-      const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true; // スムーズな動き
-      controls.dampingFactor = 0.25; // 減衰係数
-      controls.enableZoom = true; // ズームを有効にする
-      controls.enablePan = true; // パンを有効にする
-      controls.target.set(0, 0, 0); // 注視点を設定
-
+      // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera);
+        controls.autoRotate = true;
+      
       // グリッドと軸ヘルパーを追加（視覚的にシーンを確認するため）
       const gridHelper = new THREE.GridHelper(1000, 20);
       scene.add(gridHelper);
@@ -46,31 +42,32 @@
       const axisHelper = new THREE.AxesHelper(500);
       scene.add(axisHelper);
 
+      // ボックスを作成
+      const geometry = new THREE.BoxGeometry(100, 100, 100); // 幅100、高さ100、奥行き100のボックス
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xff0000, // 赤色のマテリアル
+        flatShading: true
+      });
+      const box = new THREE.Mesh(geometry, material);
+      box.position.set(0, 50, 0); // ボックスの位置を設定
+
+      scene.add(box);
+
       // 光源を追加
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
       scene.add(ambientLight);
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
       directionalLight.position.set(500, 500, 500);
-      scene.add(directionalLight);
+      scene.add(directionalLight1);
 
-      // 赤い正方形を作成
-      const geometry = new THREE.BoxGeometry(100, 100, 100);
-      const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-      const cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
-
-      // レンダリングループ
-      function animate() {
-        requestAnimationFrame(animate);
-
-        // コントロールの更新
-        controls.update();
-
-        // レンダリング
-        renderer.render(scene, camera);
-      }
       animate();
+      
+      // レンダリングループ
+      function animate() {group.rotateY(0.01);
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+      }
     }
   </script>
 </body>
