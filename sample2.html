@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/controls/OrbitControls.js"></script>
+  <script src="OrbitControls.js"></script>
 </head>
 <body>
   <canvas id="myCanvas"></canvas>
@@ -56,8 +56,8 @@
       // スフィアのグループを作成
       const group = new THREE.Group();
 
-      for (let i = 0; i < 10; i++) { // 数を減らして確認
-        const geometry = new THREE.SphereGeometry(50, 32, 32); // セグメント数を減らす
+      for (let i = 0; i < 10; i++) {
+        const geometry = new THREE.SphereGeometry(50, 32, 32);
         const material = new THREE.MeshStandardMaterial({
           color: Math.random() * 0xffffff, // ランダムな色
           flatShading: true
