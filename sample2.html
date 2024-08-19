@@ -46,6 +46,7 @@ function init() {
   directionalLight.position.set(500, 500, 500);
   scene.add(directionalLight);
 
+ const spheres = []; 
  for (let i = 0; i < 10; i++) {
   const geometry = new THREE.SphereGeometry(50, 50, 50);
   const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -54,6 +55,7 @@ function init() {
   sphere.position.y = Math.random() * 400 - 200;
   sphere.position.z = Math.random() * 400 - 200;
   scene.add(sphere);
+  spheres.push(sphere);
 }
 
   // シーンにオブジェクトが追加されているか確認
@@ -64,8 +66,9 @@ function init() {
     requestAnimationFrame(animate);
 
     // オブジェクトを回転させて動きを確認
-    sphere.rotation.y += 0.01;
-
+    spheres.forEach(sphere => {
+          sphere.rotation.y += 0.01;
+    });
     // レンダリング
     renderer.render(scene, camera);
   }
