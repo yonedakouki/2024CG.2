@@ -9,33 +9,53 @@
 </head>
 <body>
     <script>
+        // シーンの作成
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+        // カメラの作成
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 5); // カメラの位置を調整
+        camera.lookAt(0, 0, 0); // カメラを原点に向ける
+
+        // レンダラーの作成
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xffffff); // 背景色を白に設定
         document.body.appendChild(renderer.domElement);
 
+        // 立方体の作成
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 }); // Phongマテリアルに変更
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
-        camera.position.z = 5;
+        // 光源の追加
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 5, 5);
+        scene.add(light);
 
+        // カメラコントロールの設定
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+        // ウィンドウリサイズ時にカメラとレンダラーを調整
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // アニメーションループの作成
         function animate() {
             requestAnimationFrame(animate);
 
-            cube.rotation.x += 0.01;
+            cube.rotation.x += 0.01; // 立方体を回転させる
             cube.rotation.y += 0.01;
 
-            controls.update();
+            controls.update(); // カメラコントロールの更新
 
-            renderer.render(scene, camera);
+            renderer.render(scene, camera); // シーンをレンダリング
         }
-        animate();
+        animate(); // アニメーションを開始
     </script>
 </body>
 </html>
