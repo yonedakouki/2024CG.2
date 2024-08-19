@@ -1,74 +1,41 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-  <script src="OrbitControls.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Camera Control</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
-  <canvas id="myCanvas"></canvas>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  <script>
-    window.addEventListener('load', init);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    function init() {
-      // サイズを指定
-      const width = 960;
-      const height = 540;
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
 
-      // レンダラーを作成
-      const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#myCanvas')
-      });
-      renderer.setSize(width, height);
+        camera.position.z = 5;
 
-      // シーンを作成
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xaaaaaa); // 背景色を設定
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-      camera.position.set(0, 0, 1000);
+        function animate() {
+            requestAnimationFrame(animate);
 
-      // カメラコントローラーを作成
-      const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.target.set(0, 50, 0); // ボックスの位置にターゲットを設定
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
 
-      // グリッドと軸ヘルパーを追加
-      const gridHelper = new THREE.GridHelper(1000, 20);
-      scene.add(gridHelper);
+            controls.update();
 
-      const axisHelper = new THREE.AxesHelper(500);
-      scene.add(axisHelper);
-
-      // ボックスを作成
-      const geometry = new THREE.BoxGeometry(100, 100, 100);
-      const material = new THREE.MeshStandardMaterial({
-        color: 0xff0000,
-        flatShading: true
-      });
-      const box = new THREE.Mesh(geometry, material);
-      box.position.set(0, 50, 0);
-
-      scene.add(box);
-
-      // 光源を追加
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-      scene.add(ambientLight);
-
-      const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
-      directionalLight1.position.set(500, 500, 500);
-      scene.add(directionalLight1);
-
-      // レンダリングループ
-      function animate() {
-        controls.update(); // コントローラーの更新
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-      }
-
-      animate(); // アニメーション開始
-    }
-  </script>
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
 </html>
