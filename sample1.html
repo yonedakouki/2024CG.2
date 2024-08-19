@@ -28,14 +28,13 @@
 
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-       // カメラの初期座標を設定
       camera.position.set(0, 0, 1000);
 
       // カメラコントローラーを作成
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.target.set(0, 0, 0); // カメラのターゲットを原点に設定
-      
-      // グリッドと軸ヘルパーを追加（視覚的にシーンを確認するため）
+      controls.target.set(0, 50, 0); // ボックスの位置にターゲットを設定
+
+      // グリッドと軸ヘルパーを追加
       const gridHelper = new THREE.GridHelper(1000, 20);
       scene.add(gridHelper);
 
@@ -43,13 +42,13 @@
       scene.add(axisHelper);
 
       // ボックスを作成
-      const geometry = new THREE.BoxGeometry(100, 100, 100); // 幅100、高さ100、奥行き100のボックス
+      const geometry = new THREE.BoxGeometry(100, 100, 100);
       const material = new THREE.MeshStandardMaterial({
-        color: 0xff0000, // 赤色のマテリアル
+        color: 0xff0000,
         flatShading: true
       });
       const box = new THREE.Mesh(geometry, material);
-      box.position.set(0, 50, 0); // ボックスの位置を設定
+      box.position.set(0, 50, 0);
 
       scene.add(box);
 
@@ -60,15 +59,15 @@
       const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
       directionalLight1.position.set(500, 500, 500);
       scene.add(directionalLight1);
-      
+
       // レンダリングループ
       function animate() {
-        controls.update();
-        renderer.render(scene,camera);
+        controls.update(); // コントローラーの更新
+        renderer.render(scene, camera);
         requestAnimationFrame(animate);
       }
 
-      animete();
+      animate(); // アニメーション開始
     }
   </script>
 </body>
