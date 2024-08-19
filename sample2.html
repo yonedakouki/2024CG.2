@@ -46,11 +46,15 @@ function init() {
   directionalLight.position.set(500, 500, 500);
   scene.add(directionalLight);
 
-  // 単一のスフィアオブジェクトを追加
+ for (let i = 0; i < 10; i++) {
   const geometry = new THREE.SphereGeometry(50, 50, 50);
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // 赤色のマテリアル
+  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   const sphere = new THREE.Mesh(geometry, material);
+  sphere.position.x = Math.random() * 400 - 200;
+  sphere.position.y = Math.random() * 400 - 200;
+  sphere.position.z = Math.random() * 400 - 200;
   scene.add(sphere);
+}
 
   // シーンにオブジェクトが追加されているか確認
   console.log('Scene children:', scene.children);
