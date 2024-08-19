@@ -2,11 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
     <script>
-  　var init = function() {
+  var init = function() {
     var width = 800,
         height = 600;
 
@@ -22,8 +22,8 @@
 
     // カメラを作成
     var camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-    camera.position.set(0, 5, 10);
-    camera.lookAt(0, 2, 0);
+    camera.position.set(0, 5, 10); // 初期位置
+    camera.lookAt(0, 2, 0); // 注視点
     scene.add(camera);
 
     // OrbitControls を設定
@@ -32,6 +32,7 @@
     controls.dampingFactor = 0.25; // 減衰係数
     controls.enableZoom = true; // ズームを有効にする
     controls.enablePan = true; // パンを有効にする
+    controls.target.set(0, 2, 0); // 注視点を設定
 
     // 平行光源
     var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -164,7 +165,7 @@
     var animate = function() {
       requestAnimationFrame(animate);
       houseGroup.rotation.y += 0.01;
-      controls.update(); // OrbitControls の更新
+      controls.update(); // コントロールの更新
       renderer.render(scene, camera);
     };
 
