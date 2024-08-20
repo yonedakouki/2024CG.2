@@ -41,9 +41,10 @@
         scene.add(ambientLight);
 
         // 月のテクスチャの読み込み
-        const texture = new THREE.TextureLoader().load("moonmap1k.jpg");
+        const texture = new THREE.TextureLoader().load("moonmap1k.jpg"("imgs/moonmap1k.jpg", () => {
+          renderer.render(scene, camera);
+        });
         texture.colorSpace = THREE.SRGBColorSpace;
-
         const moonMaterial = new THREE.MeshStandardMaterial({
           map: texture,
           color: 0xaaaaaa,
