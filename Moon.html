@@ -68,19 +68,15 @@
             const y = 3000 * (Math.random() - 0.5);
             const z = 3000 * (Math.random() - 0.5);
             vertices.push(x, y, z);
-
-            const color = new THREE.Color(Math.random() * 0xffffff);
-            colors.push(color.r, color.g, color.b);
           }
 
           const starGeometry = new THREE.BufferGeometry();
           starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
-          starGeometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-          
+
           const starMaterial = new THREE.PointsMaterial({
             size: 8,
-            vertexColors: true,
-        });
+            color: 0xffff00,
+          });
 
           const starMesh = new THREE.Points(starGeometry, starMaterial);
           group.add(starMesh);
