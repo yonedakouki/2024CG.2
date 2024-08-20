@@ -40,11 +40,16 @@
         const ambientLight = new THREE.AmbientLight(0x404040); // 柔らかい光
         scene.add(ambientLight);
 
+        // グループの作成
+        const group = new THREE.Group();
+        scene.add(group);
+
         // 月のテクスチャの読み込み
-        const texture = new THREE.TextureLoader().load("moonmap1k.jpg"("moonmap1k.jpg", () => {
+        const texture = new THREE.TextureLoader().load("moonmap1k.jpg", () => {
           renderer.render(scene, camera);
         });
         texture.colorSpace = THREE.SRGBColorSpace;
+        
         const moonMaterial = new THREE.MeshStandardMaterial({
           map: texture,
           color: 0xaaaaaa,
@@ -65,7 +70,7 @@
           }
 
           const starGeometry = new THREE.BufferGeometry();
-          geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+          starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
 
           const starMaterial = new THREE.PointsMaterial({
             size: 8,
