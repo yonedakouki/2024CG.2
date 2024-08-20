@@ -28,6 +28,10 @@
       // シーンを作成
       const scene = new THREE.Scene();
 
+      //グリッドを表示
+      const gridHelper = new THREE.GridHelper(750,10); // size, step
+      scene.add(gridHelper);
+
       // 座標軸を表示
       const axesHelper = new THREE.AxesHelper(500); //軸の長さ X：赤、Y：緑、z：青
       scene.add(axesHelper);
