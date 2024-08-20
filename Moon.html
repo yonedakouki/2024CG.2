@@ -58,8 +58,9 @@
         const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
         group.add(moonMesh);
 
+        // 星屑を作成する
         createStarField();
-
+        
         function createStarField() {
           const vertices = [];
           for (let i = 0; i < 1000; i++) {
@@ -72,10 +73,15 @@
           const starGeometry = new THREE.BufferGeometry();
           starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
 
-          const starMaterial = new THREE.PointsMaterial({
-            size: 8,
-            color: 0xffff00,
-          });
+          // 色をランダムにする
+        function getRandomColor() {
+          return new THREE.Color(Math.random() * 0xffffff);
+        }
+
+        const starMaterial = new THREE.PointsMaterial({
+          size: 8,
+          color: getRandomColor(),
+        });
 
           const starMesh = new THREE.Points(starGeometry, starMaterial);
           group.add(starMesh);
