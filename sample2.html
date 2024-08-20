@@ -28,6 +28,10 @@
       // シーンを作成
       const scene = new THREE.Scene();
 
+      // 座標軸を表示
+      const axesHelper = new THREE.AxesHelper(500); //軸の長さ X：赤、Y：緑、z：青
+      scene.add(axesHelper);
+
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
       camera.position.set(0, 0, 1000);
@@ -35,9 +39,17 @@
       // カメラコントローラーを作成
       const controls = new OrbitControls(camera, canvasElement);
 
+       // ライトを作成
+      const ambientLight = new THREE.AmbientLight(0x404040);
+      scene.add(ambientLight);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(1, 1, 1).normalize();
+      scene.add(directionalLight);
+
       // 球体を複数作成し、シーンに追加
       const sphereGeometry = new THREE.SphereGeometry(50, 32, 32); // 半径50の球体
-      const sphereMaterial = new THREE.MeshNormalMaterial(); // 表面のマテリアル
+      const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x0077ff }); // 表面のマテリアル
 
       for (let i = 0; i < 10; i++) { // 10個の球体を作成
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
