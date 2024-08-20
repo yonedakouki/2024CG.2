@@ -38,7 +38,7 @@
 
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height,1,5000);
-      camera.position.set(0, 0, 1000);
+      camera.position.set(0, 0, 1300);
 
       // カメラコントローラーを作成
       const controls = new OrbitControls(camera, canvasElement);
@@ -58,11 +58,11 @@
       for (let i = 0; i < 10; i++) { // 10個の球体を作成
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         
-        // ランダムな位置に配置 (x, y, z が -375 から 375 の範囲でランダム)
+        // ランダムな位置に配置 (x, y, z が -350 から 350 の範囲でランダム)
         sphere.position.set(
-          Math.random() * 750 - 375,
-          Math.random() * 750 - 375,
-          Math.random() * 750 - 375
+          Math.random() * 700 - 350,
+          Math.random() * 700 - 350,
+          Math.random() * 700 - 350
         );
         
         scene.add(sphere);
