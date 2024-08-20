@@ -58,11 +58,11 @@
       for (let i = 0; i < 10; i++) { // 10個の球体を作成
         const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         
-        // ランダムな位置に配置 (x, y, z が -400 から 400 の範囲でランダム)
+        // ランダムな位置に配置 (x, y, z が -375 から 375 の範囲でランダム)
         sphere.position.set(
-          Math.random() * 800 - 400,
-          Math.random() * 800 - 400,
-          Math.random() * 800 - 400
+          Math.random() * 750 - 375,
+          Math.random() * 750 - 375,
+          Math.random() * 750 - 375
         );
         
         scene.add(sphere);
