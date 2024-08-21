@@ -82,7 +82,7 @@
                     const angle = (Math.random() - 0.5) * Math.PI / 6;
                     velocities[i * 3] = Math.sin(angle) * 0.02; // x方向の速度
                     velocities[i * 3 + 1] = 0.02 + Math.random() * 0.03; // y方向の速度
-                    velocities[i * 3 + 2] = Math.cos(angle) * 0.02; // z方向の速度
+                    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.02; // z方向の速度
                     
                     lifetimes[i] = maxLife; // 寿命リセット
                 } else {
