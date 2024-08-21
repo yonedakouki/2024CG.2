@@ -38,10 +38,11 @@
         const maxLife = 100; // パーティクルの最大寿命
 
         for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 2; // x座標
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 2; // y座標
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 2; // z座標
+            positions[i * 3] = 0; // x座標
+            positions[i * 3 + 1] = -2; // y座標
+            positions[i * 3 + 2] = 0; // z座標
 
+            const angle = (Math.random() - 0.5) * Math.PI / 6;
             velocities[i * 3] = (Math.random() - 0.5) * 0.02; // x方向の速度
             velocities[i * 3 + 1] = Math.random() * 0.05; // y方向の速度
             velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.02; // z方向の速度
@@ -71,19 +72,24 @@
 
             for (let i = 0; i < particleCount; i++) {
                 lifetimes[i] -= 1;
-                positions[i * 3 + 1] += velocities[i * 3 + 1]; // y方向に移動
 
                 // パーティクルが寿命を迎えたらリセット
                 if (lifetimes[i] <= 0) {
-                    positions[i * 3] = (Math.random() - 0.5) * 2; // x座標リセット
+                    positions[i * 3] = 0; // x座標リセット
                     positions[i * 3 + 1] = -2; // y座標リセット
-                    positions[i * 3 + 2] = (Math.random() - 0.5) * 2; // z座標リセット
+                    positions[i * 3 + 2] = 0; // z座標リセット
 
-                    velocities[i * 3 + 1] = Math.random() * 0.05; // y方向の速度をリセット
+                    const angle = (Math.random() - 0.5) * Math.PI / 6;
+                    velocities[i * 3] = Math.sin(angle) * 0.02; // x方向の速度
+                    velocities[i * 3 + 1] = 0.02 + Math.random() * 0.03; // y方向の速度
+                    velocities[i * 3 + 2] = Math.cos(angle) * 0.02; // z方向の速度
+                    
                     lifetimes[i] = maxLife; // 寿命リセット
                 } else {
                     // パーティクルの位置を更新
+                    positions[i * 3] += velocities[i * 3]; // x方向に移動
                     positions[i * 3 + 1] += velocities[i * 3 + 1]; // y方向に移動
+                    positions[i * 3 + 2] += velocities[i * 3 + 2]; // z方向に移動
 
                     // 高さに応じて透明度を減少
                     particlesMaterial.opacity = lifetimes[i] / maxLife;
