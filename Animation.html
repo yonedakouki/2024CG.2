@@ -1,57 +1,55 @@
-<script type="module">
-  import * as THREE from "three";
-  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scaling Cube Animation</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+    <script>
+        // シーン、カメラ、レンダラーを作成
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-  // サイズを指定
-  const width = 960;
-  const height = 540;
+        // ワイヤーフレームの立方体を作成
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
 
-  // レンダラーを作成
-  const canvasElement = document.querySelector("#myCanvas");
-  const renderer = new THREE.WebGLRenderer({
-    canvas: canvasElement,
-  });
-  renderer.setSize(width, height);
+        // カメラの位置を設定
+        camera.position.z = 5;
 
-  // シーンを作成
-  const scene = new THREE.Scene();
+        // アニメーションループ
+        function animate() {
+            requestAnimationFrame(animate);
 
-  // グリッドを表示
-  const gridHelper = new THREE.GridHelper(750, 10);
-  scene.add(gridHelper);
+            // 拡大縮小のアニメーション
+            cube.scale.x = 1 + Math.sin(Date.now() * 0.001);
+            cube.scale.y = 1 + Math.sin(Date.now() * 0.001);
+            cube.scale.z = 1 + Math.sin(Date.now() * 0.001);
 
-  // 座標軸を表示
-  const axesHelper = new THREE.AxesHelper(500);
-  scene.add(axesHelper);
+            renderer.render(scene, camera);
+        }
 
-  // カメラを作成
-  const camera = new THREE.PerspectiveCamera(45, width / height, 1, 5000);
-  camera.position.set(0, 0, 1500);
+        animate();
 
-  // カメラコントローラーを作成
-  const controls = new OrbitControls(camera, canvasElement);
-
-  // ライトを作成
-  const ambientLight = new THREE.AmbientLight(0x404040);
-  scene.add(ambientLight);
-
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-  directionalLight.position.set(1, 1, 1).normalize();
-  scene.add(directionalLight);
-
-  // 球体を作成し、シーンに追加
-  const sphereGeometry = new THREE.SphereGeometry(50, 32, 32);
-  const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x0077ff });
-  const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  scene.add(sphere);
-
-  // アニメーションループ
-  function animate() {
-    sphere.position.x += (Math.random() - 0.5) * 0.1; // X軸の震え
-    sphere.position.y += (Math.random() - 0.5) * 0.1; // Y軸の震え
-    sphere.position.z += (Math.random() - 0.5) * 0.1; // Z軸の震え
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-  animate();
-</script>
+        // ウィンドウサイズ変更に対応
+        window.addEventListener('resize', function() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
