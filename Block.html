@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script type="importmap">
         {
             "imports": {
@@ -14,48 +14,71 @@
         import * as THREE from "three";
         import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-        // シーンとカメラの設定
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+        window.addEventListener("DOMContentLoaded", init);
 
-        // レンダラーの設定
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        function init() {
+            // サイズを指定
+            const width = 960;
+            const height = 540;
 
-        // カメラコントロールの追加
-        const controls = new OrbitControls(camera, renderer.domElement);
+            // レンダラーを作成
+            const canvasElement = document.querySelector("#myCanvas");
+            const renderer = new THREE.WebGLRenderer({ canvas: canvasElement });
+            renderer.setSize(width, height);
 
-        // テクスチャの読み込み
-        //const textureLoader = new THREE.TextureLoader();
-        //const texture1 = textureLoader.load('texture1.jpg');
-        //const texture2 = textureLoader.load('texture2.jpg');
-        //const texture3 = textureLoader.load('texture3.jpg');
+            // シーンを作成
+            const scene = new THREE.Scene();
 
-        // 立方体の作成
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
+            // カメラを作成
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
+            camera.position.set(0, 0, 800);
 
-        const material1 = new THREE.MeshBasicMaterial({ map: texture1 });
-        const material2 = new THREE.MeshBasicMaterial({ map: texture2 });
-        const material3 = new THREE.MeshBasicMaterial({ map: texture3 });
+            // カメラコントローラーを作成
+            const controls = new OrbitControls(camera, canvasElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.2;
 
-        const cube1 = new THREE.Mesh(geometry, material1);
-        const cube2 = new THREE.Mesh(geometry, material2);
-        const cube3 = new THREE.Mesh(geometry, material3);
+            // 光源の設定
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
 
-        // 立方体の位置を調整
-        cube1.position.x = -2;
-        cube2.position.x = 0;
-        cube3.position.x = 2;
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
 
-        // シーンに立方体を追加
-        scene.add(cube1);
-        scene.add(cube2);
-        scene.add(cube3);
+            // グループの作成
+            const group = new THREE.Group();
+            scene.add(group);
 
-        animate();
+            // テクスチャの読み込み
+            const textureLoader = new THREE.TextureLoader();
+            const textures = [
+                textureLoader.load("texture1.jpg"),
+                textureLoader.load("texture2.jpg"),
+                textureLoader.load("texture3.jpg"),
+            ];
+
+            // 立方体の作成
+            const geometry = new THREE.BoxGeometry(200, 200, 200);
+
+            textures.forEach((texture, index) => {
+                const material = new THREE.MeshStandardMaterial({ map: texture });
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = index * 300 - 300;  // -300, 0, 300 の位置に配置
+                group.add(cube);
+            });
+
+            function tick() {
+                controls.update();
+                renderer.render(scene, camera);
+                requestAnimationFrame(tick);
+            }
+
+            tick();
+        }
     </script>
 </head>
-<body></body>
+<body>
+    <canvas id="myCanvas"></canvas>
+</body>
 </html>
