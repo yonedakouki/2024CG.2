@@ -68,18 +68,15 @@
             const y = 3000 * (Math.random() - 0.5);
             const z = 3000 * (Math.random() - 0.5);
             vertices.push(x, y, z);
-            // 色をランダムにする
-            function getRandomColor() {
-              return new THREE.Color(Math.random() * 0xffffff);
-            }
-            const starMaterial = new THREE.PointsMaterial({
-              size: 8,
-              color: getRandomColor(), // ランダムな色を設定
-              }
           }
 
           const starGeometry = new THREE.BufferGeometry();
           starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+
+          const starMaterial = new THREE.PointsMaterial({
+            size: 8,
+            color: 0xffff00,
+          });
 
           const starMesh = new THREE.Points(starGeometry, starMaterial);
           group.add(starMesh);
