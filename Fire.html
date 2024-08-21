@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8" />
     <script type="importmap">
@@ -88,6 +88,7 @@
                     gl_FragColor = vec4(vColor, 1.0);
                 }
             `,
+            vertexColors: true, // これで色の情報を頂点から取得することを指定
             transparent: true
         });
 
