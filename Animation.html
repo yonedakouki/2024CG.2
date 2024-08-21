@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <title>Interactive Cube Animation</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+    </style>
     <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
-    <script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
         // シーン、カメラ、レンダラーを作成
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -14,23 +26,35 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // ワイヤーフレームの立方体を作成
+        // カメラコントローラーを追加
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // 立方体を作成
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
-        // カメラの位置を設定
-        camera.position.z = 5;
+        // グリッドと座標軸を追加
+        const gridHelper = new THREE.GridHelper(10, 10);
+        scene.add(gridHelper);
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+
+        camera.position.set(2, 2, 5);
+        controls.update();
 
         // アニメーションループ
         function animate() {
             requestAnimationFrame(animate);
 
-            // 拡大縮小のアニメーション
-            cube.scale.x = 1 + Math.sin(Date.now() * 0.001);
-            cube.scale.y = 1 + Math.sin(Date.now() * 0.001);
-            cube.scale.z = 1 + Math.sin(Date.now() * 0.001);
+            // 拡大縮小アニメーション
+            cube.scale.x = 1 + Math.sin(Date.now() * 0.002);
+            cube.scale.y = 1 + Math.sin(Date.now() * 0.002);
+            cube.scale.z = 1 + Math.sin(Date.now() * 0.002);
+
+            // カメラコントローラーの更新
+            controls.update();
 
             renderer.render(scene, camera);
         }
