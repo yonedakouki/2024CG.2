@@ -2,6 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <style>
+        body { margin: 0; overflow: hidden; }
+    </style>
     <script type="importmap">
       {
         "imports": {
@@ -75,6 +78,15 @@
       }
 
       tick();
+
+      // ウィンドウサイズ変更に対応
+        window.addEventListener('resize', function() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
     </script>
   </head>
   <body>
