@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from "three";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+        // シーンとカメラの設定
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // レンダラーの設定
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // カメラコントロールの追加
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        // テクスチャの読み込み
+        //const textureLoader = new THREE.TextureLoader();
+        //const texture1 = textureLoader.load('texture1.jpg');
+        //const texture2 = textureLoader.load('texture2.jpg');
+        //const texture3 = textureLoader.load('texture3.jpg');
+
+        // 立方体の作成
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+        const material1 = new THREE.MeshBasicMaterial({ map: texture1 });
+        const material2 = new THREE.MeshBasicMaterial({ map: texture2 });
+        const material3 = new THREE.MeshBasicMaterial({ map: texture3 });
+
+        const cube1 = new THREE.Mesh(geometry, material1);
+        const cube2 = new THREE.Mesh(geometry, material2);
+        const cube3 = new THREE.Mesh(geometry, material3);
+
+        // 立方体の位置を調整
+        cube1.position.x = -2;
+        cube2.position.x = 0;
+        cube3.position.x = 2;
+
+        // シーンに立方体を追加
+        scene.add(cube1);
+        scene.add(cube2);
+        scene.add(cube3);
+
+        animate();
+    </script>
+</head>
+<body></body>
+</html>
