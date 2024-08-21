@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Fire Particle Effect</title>
     <script type="importmap">
       {
         "imports": {
@@ -18,8 +17,8 @@
       window.addEventListener("DOMContentLoaded", init);
 
       function init() {
-        const width = 960;
-        const height = 540;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
         // レンダラーを作成
         const canvasElement = document.querySelector("#myCanvas");
@@ -42,8 +41,8 @@
         const ambientLight = new THREE.AmbientLight(0x404040);
         scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
-        directionalLight.position.set(1, 1, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        directionalLight.position.set(10, 10, 10);
         scene.add(directionalLight);
 
         // パーティクルシステムを作成
