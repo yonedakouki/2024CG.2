@@ -2,7 +2,7 @@
 <html>
 <head>
     <style>
-        body { margin: 0 0 20px 0; overflow: hidden; }
+        body { margin: 0 0 5 0; overflow: hidden; }
     </style>
     <script type="importmap">
         {
@@ -29,7 +29,6 @@
         //カメラを作成
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(5, 5, 10);
-        controls.update();
 
         // カメラコントローラーを追加
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -45,6 +44,8 @@
         scene.add(gridHelper);
         const axesHelper = new THREE.AxesHelper(5);
         scene.add(axesHelper);
+        
+        controls.update();
 
         // アニメーションループ
         function animate() {
