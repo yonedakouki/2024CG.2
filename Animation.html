@@ -35,7 +35,11 @@
 
         // 立方体を作成
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00, wireframe: true });
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x008000, 
+            emissive: 0x004000, 
+            emissiveIntensity: 0.5 
+        });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
@@ -48,10 +52,10 @@
         controls.update();
 
         // 照明を作成
-        const ambientLight = new THREE.AmbientLight(0x404040); // 環境光
+        const ambientLight = new THREE.AmbientLight(0x404040, 2); // 環境光
         scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // 平行光源
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // 平行光源
         directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
 
